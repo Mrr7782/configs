@@ -1,0 +1,2 @@
+#!/bin/bash
+convert -posterize 8 -quality 5% $1 "${1%.*}jx.jpg"

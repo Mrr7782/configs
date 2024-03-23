@@ -1,0 +1,38 @@
+#!/bin/bash
+
+eq_exists=`pactl list sinks | grep ladspa_output.mbeq_1197.mbeq`
+bt_exists=`pactl list sinks | grep bluez_sink.D8_37_3B_27_F5_15.a2dp_sink`
+
+case `pactl get-default-sink` in
+	ladspa_output.mbeq_1197.mbeq)
+		if [ ! -z "$bt_exists" ]; then
+			pactl set-default-sink bluez_sink.D8_37_3B_27_F5_15.a2dp_sink
+			notify-send オーディオスイッチャー Bluetoothスピーカーに設定した。
+		else
+			pactl set-default-sink alsa_output.pci-0000_0d_00.3.analog-stereo
+			notify-send オーディオスイッチャー ヘッドフォンに設定した。
+		fi
+		;;
+	bluez_sink.D8_37_3B_27_F5_15.a2dp_sink)
+		pactl set-default-sink alsa_output.pci-0000_0d_00.3.analog-stereo
+		notify-send オーディオスイッチャー ヘッドフォンに設定した。
+		;;
+	alsa_output.pci-0000_0d_00.3.analog-stereo)
+		if [ ! -z "$eq_exists" ]; then
+			pactl set-default-sink ladspa_output.mbeq_1197.mbeq
+			notify-send オーディオスイッチャー イコライザに設定した。
+		elif [ ! -z "$bt_exists" ]; then
+			pactl set-default-sink bluez_sink.D8_37_3B_27_F5_15.a2dp_sink
+			notify-send オーディオスイッチャー Bluetoothスピーカーに設定した。
+		fi
+		;;
+	*)
+		if [ ! -z "$eq_exists" ]; then
+			pactl set-default-sink ladspa_output.mbeq_1197.mbeq
+			notify-send オーディオスイッチャー イコライザに設定した。
+		else
+			pactl set-default-sink alsa_output.pci-0000_0d_00.3.analog-stereo
+			notify-send オーディオスイッチャー ヘッドフォンに設定した。
+		fi
+		;;
+esac

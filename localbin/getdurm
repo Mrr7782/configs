@@ -1,0 +1,2 @@
+#!/bin/bash
+for i in $1; do getdur "$i"; done | awk '{sum+=$1} END {print sum}'

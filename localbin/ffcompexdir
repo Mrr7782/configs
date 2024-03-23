@@ -1,0 +1,7 @@
+#!/bin/bash
+if [ ! -d comp ]; then
+    mkdir comp
+fi
+for i in *; do
+    ffmpeg -i "$i" -c:v libvpx-vp9 -c:a libopus "comp/${i%.*}.webm";
+done

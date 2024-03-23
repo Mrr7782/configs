@@ -1,0 +1,12 @@
+#!/bin/bash
+if [ ! -z $1 -a -e $1 ]; then
+    idx=0
+    echo '#!/bin/bash'>${1}.sh
+    while read line; do
+        echo $line | sed "s/\(.*\)/yt-dlp -f 'ba\[acodec=opus\]' -o '${idx}a.webm' \1 \&\& yt-dlp -f 'bv\[height<=1080\]\[vcodec=vp9\]' -o '${idx}v.webm' \1/">>${1}.sh
+        ((idx++))
+    done<<<$(cat ${1})
+    for i in `seq -w 0 $((idx-1))`; do
+        echo "ffmpeg -i ${i}v.webm -i ${i}a.webm -map 0:v -map 1:a -c copy ${i}out.webm">>${1}.sh
+    done
+fi

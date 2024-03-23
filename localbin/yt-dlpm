@@ -1,0 +1,9 @@
+#!/bin/bash
+case "$1" in
+	-aud)
+		while read in; do yt-dlp -f 251 "$in"; done <$2
+		;;
+	*)
+		while read in; do yt-dlp "$in"; done <$1
+		;;
+esac
