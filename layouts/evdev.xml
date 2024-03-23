@@ -16,3 +16,16 @@
         </languageList>
       </configItem>
     </layout>
+    <layout>
+      <configItem>
+        <name>csm7</name>
+        <shortDescription>cs</shortDescription>
+        <description>チェコ語(M7)</description>
+        <countryList>
+          <iso3166Id>CZ</iso3166Id>
+        </countryList>
+        <languageList>
+          <iso639Id>cze</iso639Id>
+        </languageList>
+      </configItem>
+    </layout>
